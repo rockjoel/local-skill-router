@@ -13,20 +13,28 @@ This tool picks **at most one** skill — or proudly returns **`none`** — from
 - **Default: offline** (no API, milliseconds — your wallet can breathe)
 - **Prefer `none`** over a wrong match (silence is a feature)
 - **Thin always-on** mindset: don’t pay rent on rules you don’t need every turn
-- **Optional** second pass with a semantic judge (e.g. [TypeSafe Jev](https://typesafe.ai)) when local is unsure — not required
+- **Optional** second-pass judge when local is unsure — plug in what you like
 - **You own the catalog** — random GitHub skill dumps are *data*, not gospel (prompt injection is a thing)
 
-Inspired by the *idea* of selective rule/skill injection — not a fork of any plugin, and not “install everything, hope for the best.”
+## Inspiration (and what this is *not*)
+
+This project was **inspired by [TypeSafe Jev](https://typesafe.ai)** — typed “System One” judgment instead of dumping more prose into every chat. Building and shipping this repo happened **thanks to that idea**.
+
+**Not an official TypeSafe / Jev product.** No affiliation claimed. Just a portable pattern:
+
+1. Route locally first (fast, free, fail-open).
+2. If ambiguous, ask a **judge**: Jev today, or any future System One–style API, rules engine, or your own heuristic tomorrow.
+3. Open **one** skill — or none.
+
+Swap the judge; keep the idea. That’s the point.
 
 ## The plot twist (short version)
 
 Stacking skills feels productive. Until it doesn’t.  
-Everything starts to mush together: overlapping triggers, stale instructions, always-on bloat, mysterious loops.
+Overlapping triggers, stale instructions, always-on bloat, mysterious loops.
 
-What helped here: treat routing as a **decision**, not as “paste more markdown into every chat.”  
-Local rules first. A typed judge (Jev / System One–style) only when the easy path is ambiguous. Fail open if the cloud naps.
-
-I’m oddly proud of how boring that sounds. Boring is how you keep tokens.
+Treat routing as a **decision**, not “paste more markdown into every chat.”  
+Boring is how you keep tokens.
 
 ## Quickstart
 
@@ -59,9 +67,15 @@ Edit `examples/catalog.md` (or pass `--catalog path/to/your.md`).
 3. **Token overlap** with the “when” column → best skill, or `none` if weak / ambiguous
 4. Agent opens **one** `SKILL.md` (or none). Never glob the whole skills folder like it’s an all-you-can-eat buffet.
 
-## Optional: semantic judge (Jev)
+## Optional judge (Jev *or* whatever you prefer)
 
-Wire your own call if local returns `none` / `ambiguous`. Keep **fail-open**: if the API is down, keep the local result.  
+When local returns `none` / `ambiguous`, you can call a second layer:
+
+- **[TypeSafe Jev](https://typesafe.ai)** — what inspired this, and what some setups use in production
+- **Any other** typed-judgment / classifier / rules — same contract: pick a skill id or `none`
+- **Nothing** — stay fully offline; the local router is enough for many cases
+
+Keep **fail-open**: if the judge is down, keep the local result.  
 This repo ships **without** API keys or vendor lock-in on purpose.
 
 ## Agent skill (optional)
@@ -74,7 +88,7 @@ Copy `agent/SKILL.md` into your agent skills folder if you want the agent to run
 |---|---|
 | Always-on mega-rules | Thin always-on + route on demand |
 | Load many skills “just in case” | Max **one** skill or **none** |
-| Cloud ranking every turn | Local first; cloud optional |
+| One vendor forever | Local first; judge is swappable |
 | Trust random GitHub skill dumps | Catalog is yours; foreign text is untrusted |
 
 ## License
