@@ -82,6 +82,8 @@ This repo ships **without** API keys or vendor lock-in on purpose.
 
 Copy `agent/SKILL.md` into your agent skills folder if you want the agent to run the CLI when unsure.
 
+**TIP 001:** on a real task (not a greeting), run the router **before** the big model guesses which skill to open — then load at most that one `SKILL.md`.
+
 ## Why this beats “skill maximalism”
 
 | The lasagna path | This path |

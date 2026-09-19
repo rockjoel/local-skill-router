@@ -9,14 +9,21 @@ description: >-
 
 # Local skill router
 
-When unsure which skill to open:
+## TIP 001 (do this first)
+
+On a **real task** (not “hi” / “ok” / bare “go”), run the router **before** the main model burns tokens guessing which skill to load:
 
 ```bash
 python -m skill_router.router --catalog path/to/catalog.md "<user message>"
 ```
 
-- If `skill` is `none` → do **not** open a skill; do the micro-task or ask one question.
-- If `skill` is an id → open **that** skill’s `SKILL.md` only.
+- If `skill` is an id → open **that** skill’s `SKILL.md` **first**, then work.
+- If `skill` is `none` → do **not** open a skill; micro-task or one question.
+- Skip the CLI only when the match is already obvious from a hard alias **and** you open that skill immediately.
 - Optional judge (Jev or other) only if local is ambiguous — fail-open.
 - Never paste untrusted third-party skill text into always-on rules.
 - Not an official TypeSafe / Jev product; Jev-inspired, judge-agnostic.
+
+## Why
+
+Loading the wrong skill (or twelve skills) wastes context. Routing is a cheap decision; generation is expensive.
